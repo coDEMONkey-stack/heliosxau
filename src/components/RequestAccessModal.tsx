@@ -22,6 +22,7 @@ const RequestAccessModal = ({ isOpen, onClose }: RequestAccessModalProps) => {
     const overlayRef = useRef<HTMLDivElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [fileName, setFileName] = useState<string | null>(null);
+    const [fileObject, setFileObject] = useState<File | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
     const [formData, setFormData] = useState({
@@ -40,7 +41,43 @@ const RequestAccessModal = ({ isOpen, onClose }: RequestAccessModalProps) => {
         const file = e.target.files?.[0];
         if (file) {
             setFileName(file.name);
+            setFileObject(file);
         }
+    };
+
+    const resizeImage = (file: File): Promise<string> => {
+        return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = (event) => {
+                const img = new Image();
+                img.src = event.target?.result as string;
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const MAX_WIDTH = 800;
+                    const MAX_HEIGHT = 800;
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > height) {
+                        if (width > MAX_WIDTH) {
+                            height *= MAX_WIDTH / width;
+                            width = MAX_WIDTH;
+                        }
+                    } else {
+                        if (height > MAX_HEIGHT) {
+                            width *= MAX_HEIGHT / height;
+                            height = MAX_HEIGHT;
+                        }
+                    }
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx?.drawImage(img, 0, 0, width, height);
+                    resolve(canvas.toDataURL('image/jpeg', 0.6)); // Compress to JPEG with 0.6 quality
+                };
+            };
+        });
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -59,21 +96,34 @@ const RequestAccessModal = ({ isOpen, onClose }: RequestAccessModalProps) => {
             const templateIdUser = import.meta.env.VITE_EMAILJS_TEMPLATE_USER;
             const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
-            const templateParams = {
+            // Convert and compress file to base64 if it exists
+            let base64File = '';
+            if (fileObject) {
+                base64File = await resizeImage(fileObject);
+            }
+
+            const adminParams = {
                 to_name: formData.fullName,
-                to_email: formData.email, // This is for the User Template Recipient
                 user_email: formData.email,
                 instagram: formData.instagram,
                 duration: formData.duration === '0' ? '1 Day - Celestial Trial' : 'Subscription',
-                admin_email: 'ilham86.go.id@gmail.com', // This should be used in Admin Template "To Email"
+                admin_email: 'ilham86.go.id@gmail.com',
+                sender_email: 'averonbeyondtech88@gmail.com',
+                content_screenshot: base64File
+            };
+
+            const userParams = {
+                to_name: formData.fullName,
+                to_email: formData.email,
+                duration: formData.duration === '0' ? '1 Day - Celestial Trial' : 'Subscription',
                 sender_email: 'averonbeyondtech88@gmail.com'
             };
 
-            // Send notification to Admin
-            await emailjs.send(serviceId, templateIdAdmin, templateParams, publicKey);
+            // Send notification to Admin (with attachment)
+            await emailjs.send(serviceId, templateIdAdmin, adminParams, publicKey);
 
-            // Send confirmation to User
-            await emailjs.send(serviceId, templateIdUser, templateParams, publicKey);
+            // Send confirmation to User (no attachment)
+            await emailjs.send(serviceId, templateIdUser, userParams, publicKey);
 
             setStatus('success');
             setFormData({ fullName: '', email: '', instagram: '', duration: '0' });
