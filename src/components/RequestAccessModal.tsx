@@ -1,11 +1,14 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+import emailjs from '@emailjs/browser';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faXmark,
     faSun,
-    faShieldHalved
+    faShieldHalved,
+    faImage,
+    faCloudArrowUp
 } from '@fortawesome/free-solid-svg-icons';
 
 interface RequestAccessModalProps {
@@ -17,6 +20,76 @@ const RequestAccessModal = ({ isOpen, onClose }: RequestAccessModalProps) => {
     const modalRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
     const overlayRef = useRef<HTMLDivElement>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const [fileName, setFileName] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+    const [formData, setFormData] = useState({
+        fullName: '',
+        email: '',
+        instagram: '',
+        duration: '0', // 1 Day - Celestial Trial
+    });
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setFileName(file.name);
+        }
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!formData.fullName || !formData.email || !formData.instagram) {
+            alert("Please fill in all required fields.");
+            return;
+        }
+
+        setIsLoading(true);
+        setStatus('idle');
+
+        try {
+            const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+            const templateIdAdmin = import.meta.env.VITE_EMAILJS_TEMPLATE_ADMIN;
+            const templateIdUser = import.meta.env.VITE_EMAILJS_TEMPLATE_USER;
+            const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+            const templateParams = {
+                to_name: formData.fullName,
+                to_email: formData.email, // This is for the User Template Recipient
+                user_email: formData.email,
+                instagram: formData.instagram,
+                duration: formData.duration === '0' ? '1 Day - Celestial Trial' : 'Subscription',
+                admin_email: 'ilham86.go.id@gmail.com', // This should be used in Admin Template "To Email"
+                sender_email: 'averonbeyondtech88@gmail.com'
+            };
+
+            // Send notification to Admin
+            await emailjs.send(serviceId, templateIdAdmin, templateParams, publicKey);
+
+            // Send confirmation to User
+            await emailjs.send(serviceId, templateIdUser, templateParams, publicKey);
+
+            setStatus('success');
+            setFormData({ fullName: '', email: '', instagram: '', duration: '0' });
+            setFileName(null);
+
+            setTimeout(() => {
+                onClose();
+                setStatus('idle');
+            }, 3000);
+        } catch (error: any) {
+            console.error('Email failed to send details:', error);
+            setStatus('error');
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     useGSAP(() => {
         if (isOpen) {
@@ -82,11 +155,15 @@ const RequestAccessModal = ({ isOpen, onClose }: RequestAccessModalProps) => {
                         </div>
 
                         {/* Form */}
-                        <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+                        <form className="space-y-5" onSubmit={handleSubmit}>
                             <div>
                                 <label className="block text-xs font-mono text-gold-muted uppercase tracking-[0.2em] mb-2">Full Name</label>
                                 <input
                                     type="text"
+                                    name="fullName"
+                                    value={formData.fullName}
+                                    onChange={handleInputChange}
+                                    required
                                     placeholder="Ilham"
                                     className="w-full bg-obsidian border border-gold-muted/20 p-3 rounded-sm text-off-white focus:border-gold-bright outline-none transition-all placeholder:text-gray-600 font-sans"
                                 />
@@ -96,6 +173,10 @@ const RequestAccessModal = ({ isOpen, onClose }: RequestAccessModalProps) => {
                                 <label className="block text-xs font-mono text-gold-muted uppercase tracking-[0.2em] mb-2">Email Address</label>
                                 <input
                                     type="email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleInputChange}
+                                    required
                                     placeholder="your@mail.com"
                                     className="w-full bg-obsidian border border-gold-muted/20 p-3 rounded-sm text-off-white focus:border-gold-bright outline-none transition-all placeholder:text-gray-600 font-sans"
                                 />
@@ -107,6 +188,10 @@ const RequestAccessModal = ({ isOpen, onClose }: RequestAccessModalProps) => {
                                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gold-muted/50 font-mono">@</span>
                                     <input
                                         type="text"
+                                        name="instagram"
+                                        value={formData.instagram}
+                                        onChange={handleInputChange}
+                                        required
                                         placeholder="i.zhuo88"
                                         className="w-full bg-obsidian border border-gold-muted/20 py-3 pl-8 pr-3 rounded-sm text-off-white focus:border-gold-bright outline-none transition-all placeholder:text-gray-600 font-sans"
                                     />
@@ -115,20 +200,70 @@ const RequestAccessModal = ({ isOpen, onClose }: RequestAccessModalProps) => {
 
                             <div>
                                 <label className="block text-xs font-mono text-gold-muted uppercase tracking-[0.2em] mb-2">Subscription Duration</label>
-                                <select className="w-full bg-obsidian border border-gold-muted/20 p-3 rounded-sm text-off-white focus:border-gold-bright outline-none transition-all font-sans appearance-none">
-                                    <option value="1">1 Month - Initial Trial</option>
-                                    <option value="2">2 Months - Strategic Growth</option>
-                                    <option value="3">3 Months - Celestial Command</option>
+                                <select
+                                    name="duration"
+                                    value={formData.duration}
+                                    onChange={handleInputChange}
+                                    className="w-full bg-obsidian border border-gold-muted/20 p-3 rounded-sm text-off-white focus:border-gold-bright outline-none transition-all font-sans appearance-none"
+                                >
+                                    <option value="0">1 Day - Celestial Trial</option>
+                                    <option value="1" disabled>2 Weeks - Initial Trial</option>
+                                    <option value="2" disabled>1 Months - Strategic Growth</option>
+                                    <option value="3" disabled>2 Months - Celestial Command</option>
                                 </select>
                             </div>
 
+                            <div>
+                                <label className="block text-xs font-mono text-gold-muted uppercase tracking-[0.2em] mb-2">Current Balance (Screenshot)</label>
+                                <div
+                                    onClick={() => fileInputRef.current?.click()}
+                                    className="w-full bg-obsidian border border-dashed border-gold-muted/30 p-4 rounded-sm hover:border-gold-bright transition-all cursor-pointer group text-center"
+                                >
+                                    <input
+                                        type="file"
+                                        ref={fileInputRef}
+                                        onChange={handleFileChange}
+                                        className="hidden"
+                                        accept="image/*"
+                                    />
+                                    <div className="flex flex-col items-center gap-2">
+                                        <div className="text-gold-muted/50 group-hover:text-gold-bright transition-colors">
+                                            <FontAwesomeIcon icon={fileName ? faImage : faCloudArrowUp} size="lg" />
+                                        </div>
+                                        <span className="text-xs font-sans text-gray-500 group-hover:text-gray-400 transition-colors">
+                                            {fileName || "Click to upload screenshot for comparation"}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div className="pt-4">
-                                <button className="w-full py-4 bg-gradient-to-r from-gold-muted to-gold-bright text-obsidian font-bold tracking-[0.3em] uppercase hover:shadow-[0_0_30px_rgba(255,215,0,0.3)] transition-all transform hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-3">
-                                    <FontAwesomeIcon icon={faShieldHalved} />
-                                    Claim Your Seat
+                                <button
+                                    type="submit"
+                                    disabled={isLoading}
+                                    className={`w-full py-4 bg-gradient-to-r from-gold-muted to-gold-bright text-obsidian font-bold tracking-[0.3em] uppercase hover:shadow-[0_0_30px_rgba(255,215,0,0.3)] transition-all transform hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-3 ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}`}
+                                >
+                                    {isLoading ? (
+                                        <div className="w-5 h-5 border-2 border-obsidian/30 border-t-obsidian rounded-full animate-spin" />
+                                    ) : (
+                                        <FontAwesomeIcon icon={faShieldHalved} />
+                                    )}
+                                    {isLoading ? 'Verifying...' : 'Claim Your Seat'}
                                 </button>
+
+                                {status === 'success' && (
+                                    <p className="mt-4 text-xs text-center text-green-500 font-mono uppercase tracking-wider animate-pulse">
+                                        Access Granted. Check your email.
+                                    </p>
+                                )}
+                                {status === 'error' && (
+                                    <p className="mt-4 text-xs text-center text-red-500 font-mono uppercase tracking-wider">
+                                        Celestial Connection Failed. Try again.
+                                    </p>
+                                )}
+
                                 <p className="mt-4 text-[10px] text-center text-gold-muted/40 font-mono uppercase tracking-[0.1em]">
-                                    Only 12 slots remaining in current celestial cycle
+                                    Only 6 slots remaining in current celestial cycle
                                 </p>
                             </div>
                         </form>
