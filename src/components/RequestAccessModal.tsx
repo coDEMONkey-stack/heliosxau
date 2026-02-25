@@ -54,8 +54,8 @@ const RequestAccessModal = ({ isOpen, onClose }: RequestAccessModalProps) => {
                 img.src = event.target?.result as string;
                 img.onload = () => {
                     const canvas = document.createElement('canvas');
-                    const MAX_WIDTH = 800;
-                    const MAX_HEIGHT = 800;
+                    const MAX_WIDTH = 500;
+                    const MAX_HEIGHT = 500;
                     let width = img.width;
                     let height = img.height;
 
@@ -74,7 +74,7 @@ const RequestAccessModal = ({ isOpen, onClose }: RequestAccessModalProps) => {
                     canvas.height = height;
                     const ctx = canvas.getContext('2d');
                     ctx?.drawImage(img, 0, 0, width, height);
-                    resolve(canvas.toDataURL('image/jpeg', 0.6)); // Compress to JPEG with 0.6 quality
+                    resolve(canvas.toDataURL('image/jpeg', 0.4)); // Aggressive compression (0.4 quality)
                 };
             };
         });
@@ -113,7 +113,7 @@ const RequestAccessModal = ({ isOpen, onClose }: RequestAccessModalProps) => {
                 content_screenshot: base64File
             };
 
-            console.log('Sending Admin Email with params:', { ...adminParams, content_screenshot: 'Base64Data...' });
+            console.log('Sending Admin Email with params:', { ...adminParams, content_screenshot: `Base64Data (${base64File.length} chars)` });
 
             const userParams = {
                 to_name: formData.fullName || 'No Name',
