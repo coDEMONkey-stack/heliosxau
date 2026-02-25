@@ -105,7 +105,18 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
                         >
                             REQUEST ACCESS
                         </button>
-                        <button className="px-8 py-4 border border-gold-muted/30 text-gold-muted font-medium tracking-wide hover:border-gold-bright hover:text-gold-bright transition-all duration-300 rounded-sm">
+                        <button
+                            onClick={() => {
+                                const smoother = gsap.getProperty(window, "ScrollSmoother") as any;
+                                if (smoother) {
+                                    smoother.scrollTo("#system", true);
+                                } else {
+                                    // Fallback if smoother isn't available
+                                    document.getElementById('system')?.scrollIntoView({ behavior: 'smooth' });
+                                }
+                            }}
+                            className="px-8 py-4 border border-gold-muted/30 text-gold-muted font-medium tracking-wide hover:border-gold-bright hover:text-gold-bright transition-all duration-300 rounded-sm"
+                        >
                             VIEW SYSTEM LOGIC
                         </button>
                     </div>
