@@ -201,7 +201,7 @@ const SystemOverview = () => {
                         onClick={closeZoom}
                     />
 
-                    <div className="relative w-full max-w-5xl zoom-content">
+                    <div className="relative w-full max-w-5xl zoom-content flex flex-col">
                         {/* Greek God Aesthetic Frame */}
                         <div className="absolute inset-0 -m-2 md:-m-4 border border-gold-muted/30 rounded-sm shadow-[0_0_100px_rgba(197,160,89,0.2)]"></div>
 
@@ -222,7 +222,7 @@ const SystemOverview = () => {
                             <img
                                 src={selectedImage.img}
                                 alt={selectedImage.label}
-                                className="w-full h-auto max-h-[80vh] object-contain"
+                                className="w-full h-auto max-h-[75vh] md:max-h-[85vh] object-contain"
                             />
 
                             <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-obsidian via-obsidian/60 to-transparent">

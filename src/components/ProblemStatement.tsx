@@ -80,8 +80,8 @@ const ProblemStatement = () => {
                 </div>
 
                 {/* Comparison Table */}
-                <div className="mt-16 overflow-x-auto pb-4">
-                    <table className="w-full text-left border-collapse min-w-[600px]">
+                <div className="mt-16 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-gold-muted/20">
+                    <table className="w-full text-left border-collapse min-w-[500px] md:min-w-full">
                         <thead>
                             <tr className="border-b border-gold-muted/30">
                                 <th className="py-4 px-6 text-xs font-mono text-gold-muted uppercase tracking-[0.2em]">Comparison Metric</th>
