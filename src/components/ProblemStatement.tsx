@@ -84,29 +84,29 @@ const ProblemStatement = () => {
                     <table className="w-full text-left border-collapse min-w-[650px] md:min-w-full">
                         <thead>
                             <tr className="border-b border-gold-muted/30">
-                                <th className="py-4 px-6 text-xs font-mono text-gold-muted uppercase tracking-[0.2em]">Comparison Metric</th>
+                                <th className="py-4 px-6 text-xs font-mono text-gold-muted uppercase tracking-[0.2em] sticky left-0 bg-charcoal/90 backdrop-blur-md z-20 border-r border-gold-muted/10">Comparison Metric</th>
                                 <th className="py-4 px-6 text-xs font-mono text-gray-400 uppercase tracking-[0.2em] bg-obsidian/20">Manual VIP Class</th>
                                 <th className="py-4 px-6 text-xs font-mono text-gold-bright uppercase tracking-[0.2em] bg-gold-muted/5">HeliosXAU Algotrading</th>
                             </tr>
                         </thead>
                         <tbody className="text-sm md:text-base font-sans">
                             <tr className="border-b border-gold-muted/10 group hover:bg-white/5 transition-colors">
-                                <td className="py-4 px-6 text-gray-400 font-medium">Execution Mode</td>
+                                <td className="py-4 px-6 text-gray-400 font-medium sticky left-0 bg-charcoal/90 backdrop-blur-md z-10 border-r border-gold-muted/10">Execution Mode</td>
                                 <td className="py-4 px-6 text-gray-500 italic">Manual Execution</td>
                                 <td className="py-4 px-6 text-gold-bright font-semibold">100% Automated 12/5</td>
                             </tr>
                             <tr className="border-b border-gold-muted/10 group hover:bg-white/5 transition-colors">
-                                <td className="py-4 px-6 text-gray-400 font-medium">Emotional Factor</td>
+                                <td className="py-4 px-6 text-gray-400 font-medium sticky left-0 bg-charcoal/90 backdrop-blur-md z-10 border-r border-gold-muted/10">Emotional Factor</td>
                                 <td className="py-4 px-6 text-alert-red/70 italic">High Bias & Greed/Fear</td>
                                 <td className="py-4 px-6 text-gold-bright font-semibold">Zero-Emotion Logic</td>
                             </tr>
                             <tr className="border-b border-gold-muted/10 group hover:bg-white/5 transition-colors">
-                                <td className="py-4 px-6 text-gray-400 font-medium">Execution Speed</td>
+                                <td className="py-4 px-6 text-gray-400 font-medium sticky left-0 bg-charcoal/90 backdrop-blur-md z-10 border-r border-gold-muted/10">Execution Speed</td>
                                 <td className="py-4 px-6 text-gray-500 italic">Limited by Reaction Time</td>
                                 <td className="py-4 px-6 text-gold-bright font-semibold">Millisecond Precision</td>
                             </tr>
                             <tr className="border-b border-gold-muted/10 group hover:bg-white/5 transition-colors">
-                                <td className="py-4 px-6 text-gray-400 font-medium">Market Analysis</td>
+                                <td className="py-4 px-6 text-gray-400 font-medium sticky left-0 bg-charcoal/90 backdrop-blur-md z-10 border-r border-gold-muted/10">Market Analysis</td>
                                 <td className="py-4 px-6 text-gray-500 italic">Mentor Experience Varies</td>
                                 <td className="py-4 px-6 text-gold-bright font-semibold">Quantitative Institutions Data</td>
                             </tr>
