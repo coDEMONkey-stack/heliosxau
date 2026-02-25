@@ -67,7 +67,7 @@ const ProblemStatement = () => {
                     The Retail Trader's Dilemma
                 </h2>
 
-                <div className="space-y-8 text-xl md:text-2xl font-light text-gray-300 leading-relaxed">
+                <div className="space-y-5 text-xl md:text-[26px] sm:text-xl font-light text-gray-300 leading-relaxed">
                     <p>
                         <span className="text-gold-muted font-normal">Emotional Overtrading</span> erodes capital faster than any strategy can build it.
                     </p>
