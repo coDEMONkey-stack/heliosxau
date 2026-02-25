@@ -103,20 +103,17 @@ const RequestAccessModal = ({ isOpen, onClose }: RequestAccessModalProps) => {
             }
 
             const adminParams = {
-                to_name: formData.fullName,
-                user_email: formData.email,
-                instagram: formData.instagram,
+                to_name: formData.fullName || 'No Name',
+                user_email: formData.email || 'No Email',
+                instagram: formData.instagram || 'No Instagram',
                 duration: formData.duration === '0' ? '1 Day - Celestial Trial' : 'Subscription',
-                admin_email: 'ilham86.go.id@gmail.com',
-                sender_email: 'averonbeyondtech88@gmail.com',
                 content_screenshot: base64File
             };
 
             const userParams = {
-                to_name: formData.fullName,
-                to_email: formData.email,
+                to_name: formData.fullName || 'No Name',
+                to_email: formData.email || '',
                 duration: formData.duration === '0' ? '1 Day - Celestial Trial' : 'Subscription',
-                sender_email: 'averonbeyondtech88@gmail.com'
             };
 
             // Send notification to Admin (with attachment)
