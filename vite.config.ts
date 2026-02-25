@@ -9,8 +9,5 @@ export default defineConfig({
   server: {
     host: true,
     allowedHosts: ['downwardly-brashiest-halley.ngrok-free.dev']
-  },
-  build: {
-    outDir: 'dist_new'
   }
 })
