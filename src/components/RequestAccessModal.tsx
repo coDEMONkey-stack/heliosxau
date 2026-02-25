@@ -106,9 +106,14 @@ const RequestAccessModal = ({ isOpen, onClose }: RequestAccessModalProps) => {
                 to_name: formData.fullName || 'No Name',
                 user_email: formData.email || 'No Email',
                 instagram: formData.instagram || 'No Instagram',
+                // Adding aliases just in case
+                email: formData.email,
+                user_instagram: formData.instagram,
                 duration: formData.duration === '0' ? '1 Day - Celestial Trial' : 'Subscription',
                 content_screenshot: base64File
             };
+
+            console.log('Sending Admin Email with params:', { ...adminParams, content_screenshot: 'Base64Data...' });
 
             const userParams = {
                 to_name: formData.fullName || 'No Name',
