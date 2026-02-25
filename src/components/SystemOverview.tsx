@@ -195,13 +195,13 @@ const SystemOverview = () => {
 
             {/* Image Zoom Popup */}
             {selectedImage && createPortal(
-                <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 md:p-8 zoom-overlay">
+                <div className="fixed inset-0 z-[9999] flex items-center justify-center p-2 md:p-8 zoom-overlay">
                     <div
                         className="absolute inset-0 bg-obsidian/95 backdrop-blur-xl"
                         onClick={closeZoom}
                     />
 
-                    <div className="relative w-[95vw] md:w-full max-w-5xl zoom-content flex flex-col">
+                    <div className="relative w-full max-w-5xl zoom-content flex flex-col">
                         {/* Greek God Aesthetic Frame */}
                         <div className="absolute inset-0 -m-2 md:-m-4 border border-gold-muted/30 rounded-sm shadow-[0_0_100px_rgba(197,160,89,0.2)]"></div>
 
@@ -213,23 +213,23 @@ const SystemOverview = () => {
 
                         <button
                             onClick={closeZoom}
-                            className="absolute -top-12 right-0 text-gold-muted hover:text-gold-bright transition-colors duration-300 z-20 flex items-center gap-2 uppercase font-mono text-xs tracking-[0.2em]"
+                            className="absolute -top-10 md:-top-12 right-0 text-gold-muted hover:text-gold-bright transition-colors duration-300 z-20 flex items-center gap-2 uppercase font-mono text-[10px] md:text-xs tracking-[0.2em]"
                         >
-                            Close Entry <FontAwesomeIcon icon={faXmark} size="lg" />
+                            Close Entry <FontAwesomeIcon icon={faXmark} className="text-sm md:text-lg" />
                         </button>
 
                         <div className="relative bg-charcoal border border-gold-muted/20 rounded-sm overflow-hidden">
                             <img
                                 src={selectedImage.img}
                                 alt={selectedImage.label}
-                                className="w-full h-auto max-h-[85vh] md:max-h-[85vh] object-contain"
+                                className="w-full h-auto max-h-[90vh] md:max-h-[85vh] object-contain"
                             />
 
-                            <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-obsidian via-obsidian/60 to-transparent">
-                                <span className="text-gold-bright font-serif text-lg md:text-2xl tracking-widest uppercase">
+                            <div className="absolute bottom-0 left-0 w-full p-3 md:p-6 bg-gradient-to-t from-obsidian via-obsidian/60 to-transparent">
+                                <span className="text-gold-bright font-serif text-base md:text-2xl tracking-widest uppercase">
                                     {selectedImage.label}
                                 </span>
-                                <p className="text-gray-400 text-xs md:text-sm font-light mt-2 tracking-wide uppercase">
+                                <p className="text-gray-400 text-[9px] md:text-sm font-light mt-1 md:mt-2 tracking-wide uppercase">
                                     Verified Institutional Backtest - Execution Accuracy Confirmé
                                 </p>
                             </div>
