@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>HeliosXAU - Divine Access</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0d0d0d;
+            font-family: 'Inter', Arial, sans-serif;
+            color: #ffffff;
+        }
+
+        .wrapper {
+            width: 100%;
+            table-layout: fixed;
+            background-color: #0d0d0d;
+            padding-bottom: 40px;
+        }
+
+        .main {
+            background-color: #1a1a1a;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 600px;
+            border-spacing: 0;
+            border: 1px solid #d4af37;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            background: linear-gradient(180deg, rgba(212, 175, 55, 0.1) 0%, rgba(26, 26, 26, 0) 100%);
+        }
+
+        .logo {
+            width: 100px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            font-family: 'Cinzel', serif;
+            color: #d4af37;
+            font-size: 28px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .divider {
+            width: 80%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+            margin: 30px auto;
+        }
+
+        .content {
+            padding: 0 40px 40px;
+            line-height: 1.6;
+            color: #ffffff;
+        }
+
+        .greeting {
+            font-family: 'Cinzel', serif;
+            font-size: 20px;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            color: #d4af37;
+            font-weight: 600;
+        }
+
+        .details-box {
+            background-color: #0d0d0d;
+            border-left: 3px solid #d4af37;
+            padding: 20px;
+            margin: 30px 0;
+        }
+
+        .details-title {
+            font-family: 'Cinzel', serif;
+            font-size: 14px;
+            color: #d4af37;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .detail-item {
+            margin-bottom: 10px;
+            font-size: 15px;
+            color: #ffffff;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background-color: #0d0d0d;
+            font-size: 12px;
+            color: #aaaaaa;
+            border-top: 1px solid #222222;
+        }
+
+        .cta-text {
+            border: 1px solid #d4af37;
+            display: inline-block;
+            padding: 12px 30px;
+            color: #d4af37;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 2px;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+        /* Greek Ornament Border */
+        .ornament-top {
+            height: 20px;
+            background-image: url('https://www.transparenttextures.com/patterns/greek-vase.png');
+            opacity: 0.1;
+        }
+    </style>
+</head>
+
+<body>
+    <center class="wrapper">
+        <table class="main" width="100%">
+            <tr>
+                <td class="ornament-top"></td>
+            </tr>
+            <tr>
+                <td class="header">
+                    <!-- Replace with your hosted logo URL -->
+                    <img src="https://raw.githubusercontent.com/coDEMONkey-stack/heliosxau/main/src/assets/helios-logo.png"
+                        alt="Helios Logo" class="logo">
+                    <h1 class="title">Divine Access</h1>
+                </td>
+            </tr>
+            <tr>
+                <td class="content">
+                    <div class="divider"></div>
+
+                    <div class="greeting">Hail, {{to_name}}</div>
+
+                    <p>The gates of <span class="highlight">HeliosXAU</span> have swung open. Your request for the <span
+                            class="highlight">{{duration}}</span> has reached the divine court of automated precision.
+                    </p>
+
+                    <p>Our celestial engineers are currently validating your entry. Once verified, the full power of the
+                        Helios Engine will be at your command.</p>
+
+                    <div class="details-box">
+                        <div class="details-title">Entry Manifest</div>
+                        <div class="detail-item"><strong>Identity:</strong> {{to_name}}</div>
+                        <div class="detail-item"><strong>Contact:</strong> {{user_email}}</div>
+                        <div class="detail-item"><strong>Instagram:</strong> @{{instagram}}</div>
+                        <div class="detail-item"><strong>Cycle:</strong> {{duration}}</div>
+                    </div>
+
+                    <p>We shall send a messenger via Instagram or Email as soon as your access is activated. Prepare
+                        yourself for the new era of execution.</p>
+
+                    <center>
+                        <div class="cta-text">Awaiting Activation</div>
+                    </center>
+                </td>
+            </tr>
+            <tr>
+                <td class="footer">
+                    <p>&copy; 2026 HELIOSXAU AUTOMATED PRECISION<br>
+                        Crafted for the Strategic Elite</p>
+                    <p style="color: #888;">You received this because you requested entry via the Divine Access portal.
+                    </p>
+                </td>
+            </tr>
+        </table>
+    </center>
+</body>
+
+</html>
