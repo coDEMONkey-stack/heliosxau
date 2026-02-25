@@ -118,6 +118,11 @@ const RequestAccessModal = ({ isOpen, onClose }: RequestAccessModalProps) => {
             const userParams = {
                 to_name: formData.fullName || 'No Name',
                 to_email: formData.email || '',
+                user_email: formData.email || 'No Email',
+                instagram: formData.instagram || 'No Instagram',
+                // Adding aliases for user template too
+                email: formData.email,
+                user_instagram: formData.instagram,
                 duration: formData.duration === '0' ? '1 Day - Celestial Trial' : 'Subscription',
             };
 
