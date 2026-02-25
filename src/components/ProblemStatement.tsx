@@ -61,8 +61,8 @@ const ProblemStatement = () => {
     }, { scope: containerRef });
 
     return (
-        <Section id="problem" ref={containerRef} className="bg-charcoal/30 flex items-center justify-center min-h-[60vh]">
-            <div className="max-w-4xl text-center space-y-12" style={{ willChange: 'transform, opacity' }}>
+        <Section id="problem" ref={containerRef} className="bg-charcoal/30 flex items-center justify-center min-h-[60vh] !px-4 md:!px-12 lg:!px-24">
+            <div className="max-w-5xl w-full text-center space-y-12" style={{ willChange: 'transform, opacity' }}>
                 <h2 className="text-3xl md:text-4xl text-off-white font-serif tracking-wide border-b border-gold-muted/20 pb-6 inline-block">
                     The Retail Trader's Dilemma
                 </h2>
@@ -80,8 +80,8 @@ const ProblemStatement = () => {
                 </div>
 
                 {/* Comparison Table */}
-                <div className="mt-16 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-gold-muted/20">
-                    <table className="w-full text-left border-collapse min-w-[500px] md:min-w-full">
+                <div className="mt-16 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-gold-muted/20 -mx-4 px-4 md:mx-0 md:px-0">
+                    <table className="w-full text-left border-collapse min-w-[650px] md:min-w-full">
                         <thead>
                             <tr className="border-b border-gold-muted/30">
                                 <th className="py-4 px-6 text-xs font-mono text-gold-muted uppercase tracking-[0.2em]">Comparison Metric</th>
