@@ -1,26 +1,15 @@
 import { useState, useEffect } from 'react';
 
 const TrialCountdown = () => {
-    const STORAGE_KEY = 'helios_trial_expiry';
-    const NINE_HOURS_MS = 9 * 60 * 60 * 1000;
+    // Target: 2026-02-27 00:30 (GMT+8)
+    const TARGET_DATE = new Date('2026-02-27T00:30:00+08:00').getTime();
 
     const [timeLeft, setTimeLeft] = useState<number>(0);
 
     useEffect(() => {
-        // Initialize expiry time
-        let expiry = localStorage.getItem(STORAGE_KEY);
-
-        if (!expiry) {
-            const newExpiry = Date.now() + NINE_HOURS_MS;
-            localStorage.setItem(STORAGE_KEY, newExpiry.toString());
-            expiry = newExpiry.toString();
-        }
-
-        const expiryTime = parseInt(expiry);
-
         const updateTimer = () => {
             const now = Date.now();
-            const diff = Math.max(0, Math.floor((expiryTime - now) / 1000));
+            const diff = Math.max(0, Math.floor((TARGET_DATE - now) / 1000));
             setTimeLeft(diff);
         };
 
