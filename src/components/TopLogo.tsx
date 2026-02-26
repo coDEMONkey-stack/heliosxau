@@ -23,7 +23,7 @@ const TopLogo = () => {
     }, []);
 
     return (
-        <div className={`fixed top-8 left-1/2 -translate-x-1/2 z-[110] transition-all duration-1000 ${isAtFooter ? 'opacity-0 -translate-y-12 pointer-events-none' : isScrolled ? 'opacity-40 scale-75 blur-[1px]' : 'opacity-100 scale-100'}`}>
+        <div className={`fixed top-20 left-1/2 -translate-x-1/2 z-[110] transition-all duration-1000 ${isAtFooter ? 'opacity-0 -translate-y-12 pointer-events-none' : isScrolled ? 'opacity-40 scale-75 blur-[1px]' : 'opacity-100 scale-100'}`}>
             <div className="relative group cursor-pointer flex flex-col items-center" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
                 {/* Subtle Glow Backdrop */}
                 <div className="absolute inset-x-[-100%] inset-y-[-50%] bg-gold-muted/5 blur-3xl -z-10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>

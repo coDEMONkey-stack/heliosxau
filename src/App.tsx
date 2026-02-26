@@ -17,6 +17,7 @@ import Footer from './components/Footer';
 import Preloader from './components/Preloader';
 import Header from './components/Header';
 import TopLogo from './components/TopLogo';
+import TrialCountdown from './components/TrialCountdown';
 import RequestAccessModal from './components/RequestAccessModal';
 
 // Register GSAP plugins
@@ -46,6 +47,7 @@ function App() {
       {/* Fixed Elements (Outside Smooth Content) */}
       {!isLoading && (
         <>
+          <TrialCountdown />
           <TopLogo />
           <Header onOpenModal={() => setIsModalOpen(true)} />
         </>
