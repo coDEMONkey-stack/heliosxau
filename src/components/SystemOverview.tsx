@@ -10,6 +10,7 @@ import MarketStructureVisual from './MarketStructureVisual';
 import benefit1 from '../assets/benefits/benefit1.jpeg';
 import benefit2 from '../assets/benefits/benefit2.jpeg';
 import benefit3 from '../assets/benefits/benefit3.jpeg';
+import InvestmentCalculator from './InvestmentCalculator';
 
 const SystemOverview = () => {
     const containerRef = useRef<HTMLElement>(null);
@@ -191,6 +192,14 @@ const SystemOverview = () => {
                         Verified institutional performance metrics
                     </p>
                 </div>
+            </div>
+
+            {/* Investment Calculator Section with distinct background */}
+            <div className="mt-24 py-24 bg-charcoal/80 border-t border-gold-muted/5 relative">
+                {/* Decorative Pattern Background (Optional, but adds premium feel) */}
+                <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#C5A059_1px,transparent_1px)] [background-size:20px_20px]"></div>
+
+                <InvestmentCalculator />
             </div>
 
             {/* Image Zoom Popup */}
