@@ -44,11 +44,11 @@ const TrialCountdown = () => {
                     </div>
                 </div>
 
-                <div className="h-4 w-[1px] bg-gold-muted/20 hidden md:block" />
+                {/* <div className="h-4 w-[1px] bg-gold-muted/20 hidden md:block" /> */}
 
-                <p className="text-[9px] md:text-[10px] font-sans font-medium text-gold-muted/40 uppercase tracking-[0.15em] hidden lg:block">
+                {/* <p className="text-[9px] md:text-[10px] font-sans font-medium text-gold-muted/40 uppercase tracking-[0.15em] hidden lg:block">
                     Celestial Cycle Alpha-7
-                </p>
+                </p> */}
             </div>
 
             {/* Ambient gold glow under the bar */}
