@@ -241,7 +241,7 @@ const InvestmentCalculator = () => {
             {/* Disclaimer & Policy Notes */}
             <div className="mt-12 text-center">
                 <p className="text-[9px] text-gray-600 uppercase tracking-[0.3em] leading-relaxed max-w-3xl mx-auto">
-                    Note: Projections are based on historical persistence and institutional execution algorithms. Past performance does not guarantee the favor of the gods in future market cycles. <span className="text-gold-muted/50">Rental Policy: We provide automated execution for rental durations only; we do not offer fund management or investment custody services.</span>
+                    Note: Projections are based on historical persistence and institutional execution algorithms. Past performance does not guarantee the favor of the gods in future market cycles. <span className="text-gold-muted/50">We provide automated execution for rental durations only; we do not offer fund management or investment custody services.</span>
                 </p>
             </div>
         </div>
