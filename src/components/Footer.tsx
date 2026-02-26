@@ -4,6 +4,7 @@ import { useGSAP } from '@gsap/react';
 import { SplitText } from 'gsap/SplitText';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import logo from '../assets/helios-logo.png';
 
 const Footer = () => {
@@ -62,7 +63,7 @@ const Footer = () => {
                     PAST PERFORMANCE IS NOT INDICATIVE OF FUTURE RESULTS. No representation is being made that any account will or is likely to achieve profits or losses similar to those shown.
                 </p>
                 <div className="flex flex-col md:flex-row justify-between items-center gap-6 pt-4 xs:mb-32 sm:mb-0">
-                    <div className="flex items-center gap-4">
+                    <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8">
                         <a
                             href="https://www.instagram.com/heliosxau"
                             target="_blank"
@@ -74,6 +75,15 @@ const Footer = () => {
                             </div>
                             <span className="text-[11px] font-mono tracking-[0.2em] uppercase">@heliosxau</span>
                         </a>
+                        <a
+                            href="mailto:hi@heliosxau.xyz"
+                            className="group flex items-center gap-2 text-gold-muted hover:text-gold-bright transition-all duration-300"
+                        >
+                            <div className="w-8 h-8 rounded-full border border-gold-muted/30 flex items-center justify-center group-hover:border-gold-bright transition-colors">
+                                <FontAwesomeIcon icon={faEnvelope} className="text-sm" />
+                            </div>
+                            <span className="text-[11px] font-mono tracking-[0.2em] uppercase">hi@heliosxau.xyz</span>
+                        </a>
                     </div>
                     <div className="text-gray-500 font-mono tracking-widest">
                         © {new Date().getFullYear()} HELIOS XAU. All Rights Reserved.
@@ -83,4 +93,5 @@ const Footer = () => {
         </footer>
     );
 };
+
 export default Footer;
