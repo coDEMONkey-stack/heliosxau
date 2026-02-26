@@ -5,9 +5,12 @@ import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 
 const InvestmentCalculator = () => {
-    const [investment, setInvestment] = useState<number>(600);
+    const [inputValue, setInputValue] = useState<string>("600");
     const [isCent, setIsCent] = useState<boolean>(false);
     const containerRef = useRef<HTMLDivElement>(null);
+
+    // Derived values
+    const investment = inputValue === "" ? 0 : parseFloat(inputValue);
 
     // Constant Parameters
     const WIN_RATE = 74.62;
@@ -50,6 +53,18 @@ const InvestmentCalculator = () => {
 
     return (
         <div ref={containerRef} className="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
+            {/* Styles to hide spin buttons */}
+            <style dangerouslySetInnerHTML={{
+                __html: `
+                input::-webkit-outer-spin-button,
+                input::-webkit-inner-spin-button {
+                    -webkit-appearance: none;
+                    margin: 0;
+                }
+                input[type=number] {
+                    -moz-appearance: textfield;
+                }
+            `}} />
             {/* Header Aesthetic */}
             <div className="text-center mb-12">
                 <div className="inline-block relative">
@@ -80,10 +95,18 @@ const InvestmentCalculator = () => {
                             <div className="relative">
                                 <input
                                     type="number"
-                                    value={investment}
-                                    onChange={(e) => setInvestment(Number(e.target.value))}
+                                    value={inputValue}
+                                    onChange={(e) => {
+                                        const val = e.target.value;
+                                        // Prevent leading zeros if there's more than one digit
+                                        if (val.length > 1 && val.startsWith('0')) {
+                                            setInputValue(val.replace(/^0+/, ''));
+                                        } else {
+                                            setInputValue(val);
+                                        }
+                                    }}
                                     className="w-full bg-obsidian/60 border border-gold-muted/30 text-white px-5 py-4 text-2xl font-serif focus:outline-none focus:border-gold-bright transition-colors rounded-sm"
-                                    placeholder="Enter amount..."
+                                    placeholder="0"
                                 />
                                 <div className="absolute right-4 top-1/2 -translate-y-1/2 flex gap-2">
                                     <button
