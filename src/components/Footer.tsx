@@ -62,8 +62,8 @@ const Footer = () => {
                 <p>
                     PAST PERFORMANCE IS NOT INDICATIVE OF FUTURE RESULTS. No representation is being made that any account will or is likely to achieve profits or losses similar to those shown.
                 </p>
-                <div className="flex flex-col md:flex-row justify-between items-center gap-6 pt-4 xs:mb-32 sm:mb-0">
-                    <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8">
+                <div className="flex items-center gap-6 pt-4 xs:mb-32 sm:mb-0">
+                    <div className="flex items-center gap-4 md:gap-8">
                         <a
                             href="https://www.instagram.com/heliosxau"
                             target="_blank"
