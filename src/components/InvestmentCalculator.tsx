@@ -239,16 +239,10 @@ const InvestmentCalculator = () => {
             </div>
 
             {/* Disclaimer & Policy Notes */}
-            <div className="mt-12 space-y-6 text-center">
-                <p className="text-[9px] text-gray-600 uppercase tracking-[0.3em] leading-relaxed max-w-2xl mx-auto">
-                    Note: Projections are based on historical persistence and institutional execution algorithms. Past performance does not guarantee the favor of the gods in future market cycles.
+            <div className="mt-12 text-center">
+                <p className="text-[9px] text-gray-600 uppercase tracking-[0.3em] leading-relaxed max-w-3xl mx-auto">
+                    Note: Projections are based on historical persistence and institutional execution algorithms. Past performance does not guarantee the favor of the gods in future market cycles. <span className="text-gold-muted/50">Rental Policy: We provide automated execution for rental durations only; we do not offer fund management or investment custody services.</span>
                 </p>
-
-                <div className="inline-block px-6 py-2 border border-gold-muted/20 bg-gold-muted/5 rounded-full">
-                    <p className="text-[10px] md:text-xs text-gold-muted uppercase tracking-[0.2em] font-bold">
-                        Rental Policy: Kami hanya menyediakan bot dengan durasi sewa, bukan jasa titip dana.
-                    </p>
-                </div>
             </div>
         </div>
     );
