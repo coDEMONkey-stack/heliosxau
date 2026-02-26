@@ -11,7 +11,7 @@ import HelionyxSolution from './components/HelionyxSolution';
 import CorePrinciples from './components/CorePrinciples';
 import SystemOverview from './components/SystemOverview';
 import WhoThisIsFor from './components/WhoThisIsFor';
-// import Pricing from './components/Pricing';
+import Pricing from './components/Pricing';
 import BrandStory from './components/BrandStory';
 import Footer from './components/Footer';
 import Preloader from './components/Preloader';
@@ -26,6 +26,10 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText, useGSAP);
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
 
   useGSAP(() => {
     if (!isLoading) {
@@ -49,7 +53,7 @@ function App() {
         <>
           <TrialCountdown />
           <TopLogo />
-          <Header onOpenModal={() => setIsModalOpen(true)} />
+          <Header onOpenModal={() => handleOpenModal()} />
         </>
       )}
 
@@ -57,13 +61,13 @@ function App() {
       <div id="smooth-wrapper">
         <div id="smooth-content">
           <div className={`bg-obsidian min-h-screen text-off-white selection:bg-gold-muted selection:text-obsidian transition-opacity duration-1000 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
-            <Hero onOpenModal={() => setIsModalOpen(true)} />
+            <Hero onOpenModal={() => handleOpenModal()} />
             <ProblemStatement />
             <HelionyxSolution />
             <CorePrinciples />
             <SystemOverview />
             <WhoThisIsFor />
-            {/* <Pricing /> */}
+            <Pricing onOpenModal={handleOpenModal} />
             <BrandStory />
             <Footer />
           </div>
@@ -71,7 +75,10 @@ function App() {
       </div>
 
       {/* Global Modals (Outside Smooth Content) */}
-      <RequestAccessModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <RequestAccessModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </>
   );
 }

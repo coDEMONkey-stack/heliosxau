@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import emailjs from '@emailjs/browser';
@@ -31,6 +31,14 @@ const RequestAccessModal = ({ isOpen, onClose }: RequestAccessModalProps) => {
         instagram: '',
         duration: '0', // 1 Day - Celestial Trial
     });
+
+    // Update duration when modal opens or selectedDuration changes
+    useEffect(() => {
+        if (isOpen) {
+            // For now, only 1 Day is allowed during trial period
+            setFormData(prev => ({ ...prev, duration: '0' }));
+        }
+    }, [isOpen]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -264,9 +272,9 @@ const RequestAccessModal = ({ isOpen, onClose }: RequestAccessModalProps) => {
                                     className="w-full bg-obsidian border border-gold-muted/20 p-3 rounded-sm text-off-white focus:border-gold-bright outline-none transition-all font-sans appearance-none"
                                 >
                                     <option value="0">1 Day - Celestial Trial</option>
-                                    <option value="1" disabled>2 Weeks - Initial Trial</option>
-                                    <option value="2" disabled>1 Months - Strategic Growth</option>
-                                    <option value="3" disabled>2 Months - Celestial Command</option>
+                                    <option value="1" disabled>2 Weeks - Initial Trial (Locked)</option>
+                                    <option value="2" disabled>1 Month - Strategic Growth (Locked)</option>
+                                    <option value="3" disabled>2 Months - Celestial Command (Locked)</option>
                                 </select>
                             </div>
 
