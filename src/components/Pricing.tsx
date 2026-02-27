@@ -87,6 +87,7 @@ const Pricing = ({ onOpenModal }: PricingProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
 
     // Secure Observer to prevent tampering with the blur lock
+    /*
     useEffect(() => {
         const targetNode = containerRef.current;
         if (!targetNode) return;
@@ -115,6 +116,7 @@ const Pricing = ({ onOpenModal }: PricingProps) => {
 
         return () => observer.disconnect();
     }, []);
+    */
 
     useGSAP(() => {
         if (!containerRef.current) return;
@@ -144,7 +146,7 @@ const Pricing = ({ onOpenModal }: PricingProps) => {
                 </div>
 
                 <div className="relative group">
-                    <div className="grid md:grid-cols-3 gap-8 transition-all duration-700 blur-2xl pointer-events-none select-none">
+                    <div className="grid md:grid-cols-3 gap-8 transition-all duration-700">
                         <div className="pricing-card-wrapper">
                             <PriceCard
                                 durationLabel="2 Weeks"
@@ -173,7 +175,8 @@ const Pricing = ({ onOpenModal }: PricingProps) => {
                         </div>
                     </div>
 
-                    {/* Highly Secure Blur Overlay */}
+                    {/* Highly Secure Blur Overlay (Commented out as trial ended) */}
+                    {/*
                     <div
                         id="pricing-lock-overlay"
                         className="absolute inset-0 z-[50] flex flex-col items-center justify-center bg-obsidian/40 backdrop-blur-3xl rounded-3xl border border-white/5 shadow-2xl"
@@ -194,6 +197,7 @@ const Pricing = ({ onOpenModal }: PricingProps) => {
                             </button>
                         </div>
                     </div>
+                    */}
                 </div>
             </div>
         </Section>

@@ -32,11 +32,11 @@ const RequestAccessModal = ({ isOpen, onClose }: RequestAccessModalProps) => {
         duration: '0', // 1 Day - Celestial Trial
     });
 
-    // Update duration when modal opens or selectedDuration changes
+    // Update duration when modal opens
     useEffect(() => {
         if (isOpen) {
-            // For now, only 1 Day is allowed during trial period
-            setFormData(prev => ({ ...prev, duration: '0' }));
+            // Default to 2 Weeks as trial ended
+            setFormData(prev => ({ ...prev, duration: '1' }));
         }
     }, [isOpen]);
 
@@ -271,10 +271,10 @@ const RequestAccessModal = ({ isOpen, onClose }: RequestAccessModalProps) => {
                                     onChange={handleInputChange}
                                     className="w-full bg-obsidian border border-gold-muted/20 p-3 rounded-sm text-off-white focus:border-gold-bright outline-none transition-all font-sans appearance-none"
                                 >
-                                    <option value="0">1 Day - Celestial Trial</option>
-                                    <option value="1" disabled>2 Weeks - Initial Trial (Locked)</option>
-                                    <option value="2" disabled>1 Month - Strategic Growth (Locked)</option>
-                                    <option value="3" disabled>2 Months - Celestial Command (Locked)</option>
+                                    <option value="0" disabled>1 Day - Celestial Trial (Ends)</option>
+                                    <option value="1">2 Weeks - Initial Trial</option>
+                                    <option value="2">1 Month - Strategic Growth</option>
+                                    <option value="3">2 Months - Celestial Command</option>
                                 </select>
                             </div>
 
