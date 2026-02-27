@@ -81,7 +81,7 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
             {/* 3D Background */}
             <ThreeBackground />
 
-            <div className="relative z-10 w-full mt-12 max-w-7xl px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="relative z-10 w-full max-w-7xl px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
                 {/* Text Content */}
                 <div ref={textRef} className="text-center lg:text-left space-y-8 order-2 lg:order-1">
