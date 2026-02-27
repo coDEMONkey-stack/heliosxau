@@ -39,6 +39,18 @@ const RequestAccessModal = ({ isOpen, onClose }: RequestAccessModalProps) => {
     const [paymentNetwork, setPaymentNetwork] = useState<'tron' | 'bnb'>('tron');
     const [copied, setCopied] = useState(false);
 
+    const PRICING_MAP: Record<string, number> = {
+        '1': 599000,
+        '2': 1078200,
+        '3': 1617300,
+    };
+
+    const formatter = new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0,
+    });
+
     // Update duration when modal opens
     useEffect(() => {
         if (isOpen) {
@@ -343,6 +355,14 @@ const RequestAccessModal = ({ isOpen, onClose }: RequestAccessModalProps) => {
                                             </button>
                                         </div>
                                     </div>
+
+                                    <div className="w-full text-center py-2 px-4 bg-gold-muted/5 border border-gold-muted/10 rounded-sm">
+                                        <p className="text-[10px] font-mono text-gold-muted/60 mb-1 uppercase">Total to Pay</p>
+                                        <p className="text-lg md:text-xl font-bold text-gold-bright">
+                                            {formatter.format(PRICING_MAP[formData.duration] || 0)}
+                                        </p>
+                                    </div>
+
                                     <p className="text-[9px] font-mono text-gold-muted/40 italic text-center">
                                         * Please transfer exactly the amount for your chosen duration.
                                     </p>
