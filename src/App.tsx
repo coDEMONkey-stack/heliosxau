@@ -25,8 +25,10 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText, useGSAP);
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState('1');
 
-  const handleOpenModal = () => {
+  const handleOpenModal = (planId: string = '1') => {
+    setSelectedPlan(planId);
     setIsModalOpen(true);
   };
 
@@ -59,7 +61,7 @@ function App() {
       <div id="smooth-wrapper">
         <div id="smooth-content">
           <div className={`bg-obsidian min-h-screen text-off-white selection:bg-gold-muted selection:text-obsidian transition-opacity duration-1000 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
-            <Hero onOpenModal={() => handleOpenModal()} />
+            <Hero onOpenModal={() => handleOpenModal('1')} />
             <ProblemStatement />
             <HelionyxSolution />
             <CorePrinciples />
@@ -76,6 +78,7 @@ function App() {
       <RequestAccessModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
+        initialDuration={selectedPlan}
       />
     </>
   );

@@ -1,7 +1,8 @@
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import Section from './Section';
+import { getUsdtIdrRate } from '../utils/cryptoApi';
 
 interface PriceCardProps {
     durationLabel: string;
@@ -9,10 +10,11 @@ interface PriceCardProps {
     originalPrice?: number;
     discount?: number;
     isPopular?: boolean;
-    onOpenModal: () => void;
+    onOpenModal: (duration: string) => void;
+    usdtRate: number;
 }
 
-const PriceCard = ({ durationLabel, price, originalPrice, discount, isPopular, onOpenModal }: PriceCardProps) => {
+const PriceCard = ({ durationLabel, price, originalPrice, discount, isPopular, onOpenModal, usdtRate }: PriceCardProps) => {
     const cardRef = useRef<HTMLDivElement>(null);
 
     const formatter = new Intl.NumberFormat('id-ID', {
@@ -37,8 +39,13 @@ const PriceCard = ({ durationLabel, price, originalPrice, discount, isPopular, o
                     <div className="text-gray-500 line-through text-sm mb-1">{formatter.format(originalPrice)}</div>
                 )}
 
-                <div className="text-3xl md:text-4xl font-bold text-gold-primary mb-2">
+                <div className="text-3xl md:text-4xl font-bold text-gold-primary mb-1">
                     {formatter.format(price)}
+                </div>
+
+                <div className="text-sm font-mono text-gold-muted/60 mb-6 uppercase tracking-wider flex items-center justify-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                    ≈ {(price / usdtRate).toFixed(2)} USDT
                 </div>
 
                 {discount && (
@@ -68,7 +75,7 @@ const PriceCard = ({ durationLabel, price, originalPrice, discount, isPopular, o
             </div>
 
             <button
-                onClick={() => onOpenModal()}
+                onClick={() => onOpenModal(durationLabel === '2 Weeks' ? '1' : durationLabel === '1 Month' ? '2' : '3')}
                 className={`w-full py-3 rounded-lg font-semibold transition-all duration-300 ${isPopular ? 'bg-gold-bright text-black hover:bg-white hover:shadow-[0_0_20px_rgba(255,215,0,0.3)]' : 'bg-transparent border border-gold-muted text-gold-muted hover:border-gold-bright hover:text-gold-bright'}`}
             >
                 Get Started
@@ -78,11 +85,20 @@ const PriceCard = ({ durationLabel, price, originalPrice, discount, isPopular, o
 };
 
 interface PricingProps {
-    onOpenModal: () => void;
+    onOpenModal: (duration: string) => void;
 }
 
 const Pricing = ({ onOpenModal }: PricingProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
+    const [usdtRate, setUsdtRate] = useState<number>(16000);
+
+    useEffect(() => {
+        const fetchRate = async () => {
+            const rate = await getUsdtIdrRate();
+            setUsdtRate(rate);
+        };
+        fetchRate();
+    }, []);
 
     // Secure Observer to prevent tampering with the blur lock
     /*
@@ -150,6 +166,7 @@ const Pricing = ({ onOpenModal }: PricingProps) => {
                                 durationLabel="2 Weeks"
                                 price={599000}
                                 onOpenModal={onOpenModal}
+                                usdtRate={usdtRate}
                             />
                         </div>
                         <div className="pricing-card-wrapper">
@@ -159,6 +176,7 @@ const Pricing = ({ onOpenModal }: PricingProps) => {
                                 originalPrice={1198000}
                                 discount={10}
                                 onOpenModal={onOpenModal}
+                                usdtRate={usdtRate}
                             />
                         </div>
                         <div className="pricing-card-wrapper">
@@ -169,6 +187,7 @@ const Pricing = ({ onOpenModal }: PricingProps) => {
                                 discount={25}
                                 isPopular={true}
                                 onOpenModal={onOpenModal}
+                                usdtRate={usdtRate}
                             />
                         </div>
                     </div>

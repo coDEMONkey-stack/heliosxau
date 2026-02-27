@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import emailjs from '@emailjs/browser';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { getUsdtIdrRate } from '../utils/cryptoApi';
 import {
     faXmark,
     faSun,
@@ -19,9 +20,10 @@ import usdtBnb from '../assets/get-subscription/usdt-bnb.jpg';
 interface RequestAccessModalProps {
     isOpen: boolean;
     onClose: () => void;
+    initialDuration?: string;
 }
 
-const RequestAccessModal = ({ isOpen, onClose }: RequestAccessModalProps) => {
+const RequestAccessModal = ({ isOpen, onClose, initialDuration = '1' }: RequestAccessModalProps) => {
     const modalRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
     const overlayRef = useRef<HTMLDivElement>(null);
@@ -38,6 +40,7 @@ const RequestAccessModal = ({ isOpen, onClose }: RequestAccessModalProps) => {
     });
     const [paymentNetwork, setPaymentNetwork] = useState<'tron' | 'bnb'>('tron');
     const [copied, setCopied] = useState(false);
+    const [usdtRate, setUsdtRate] = useState<number>(16000);
 
     const PRICING_MAP: Record<string, number> = {
         '1': 599000,
@@ -54,8 +57,13 @@ const RequestAccessModal = ({ isOpen, onClose }: RequestAccessModalProps) => {
     // Update duration when modal opens
     useEffect(() => {
         if (isOpen) {
-            // Default to 2 Weeks as trial ended
-            setFormData(prev => ({ ...prev, duration: '1' }));
+            setFormData(prev => ({ ...prev, duration: initialDuration }));
+
+            const fetchRate = async () => {
+                const rate = await getUsdtIdrRate();
+                setUsdtRate(rate);
+            };
+            fetchRate();
         }
     }, [isOpen]);
 
@@ -358,9 +366,15 @@ const RequestAccessModal = ({ isOpen, onClose }: RequestAccessModalProps) => {
 
                                     <div className="w-full text-center py-2 px-4 bg-gold-muted/5 border border-gold-muted/10 rounded-sm">
                                         <p className="text-[10px] font-mono text-gold-muted/60 mb-1 uppercase">Total to Pay</p>
-                                        <p className="text-lg md:text-xl font-bold text-gold-bright">
-                                            {formatter.format(PRICING_MAP[formData.duration] || 0)}
-                                        </p>
+                                        <div className="flex flex-col items-center">
+                                            <p className="text-lg md:text-xl font-bold text-gold-bright">
+                                                {formatter.format(PRICING_MAP[formData.duration] || 0)}
+                                            </p>
+                                            <p className="text-xs font-mono text-gold-muted/50 mt-1 uppercase tracking-wider flex items-center gap-1.5 justify-center">
+                                                <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                                                ≈ {((PRICING_MAP[formData.duration] || 0) / usdtRate).toFixed(2)} USDT
+                                            </p>
+                                        </div>
                                     </div>
 
                                     <p className="text-[9px] font-mono text-gold-muted/40 italic text-center">
