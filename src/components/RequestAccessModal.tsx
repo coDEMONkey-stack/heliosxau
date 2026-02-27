@@ -419,7 +419,7 @@ const RequestAccessModal = ({ isOpen, onClose }: RequestAccessModalProps) => {
                                 )}
 
                                 <p className="mt-4 text-[10px] text-center text-gold-muted/40 font-mono uppercase tracking-[0.1em]">
-                                    Only 1 out of 6 seats remaining in current celestial cycle
+                                    Only 3 out of 3 seats remaining in current cycle
                                 </p>
                             </div>
                         </form>
