@@ -1,8 +1,7 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import Section from './Section';
-import { getUsdtIdrRate } from '../utils/cryptoApi';
 
 interface PriceCardProps {
     durationLabel: string;
@@ -86,19 +85,11 @@ const PriceCard = ({ durationLabel, price, originalPrice, discount, isPopular, o
 
 interface PricingProps {
     onOpenModal: (duration: string) => void;
+    usdtRate: number;
 }
 
-const Pricing = ({ onOpenModal }: PricingProps) => {
+const Pricing = ({ onOpenModal, usdtRate }: PricingProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const [usdtRate, setUsdtRate] = useState<number>(16000);
-
-    useEffect(() => {
-        const fetchRate = async () => {
-            const rate = await getUsdtIdrRate();
-            setUsdtRate(rate);
-        };
-        fetchRate();
-    }, []);
 
     // Secure Observer to prevent tampering with the blur lock
     /*

@@ -3,7 +3,6 @@ import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import emailjs from '@emailjs/browser';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { getUsdtIdrRate } from '../utils/cryptoApi';
 import {
     faXmark,
     faSun,
@@ -21,9 +20,10 @@ interface RequestAccessModalProps {
     isOpen: boolean;
     onClose: () => void;
     initialDuration?: string;
+    usdtRate: number;
 }
 
-const RequestAccessModal = ({ isOpen, onClose, initialDuration = '1' }: RequestAccessModalProps) => {
+const RequestAccessModal = ({ isOpen, onClose, initialDuration = '1', usdtRate }: RequestAccessModalProps) => {
     const modalRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
     const overlayRef = useRef<HTMLDivElement>(null);
@@ -40,7 +40,6 @@ const RequestAccessModal = ({ isOpen, onClose, initialDuration = '1' }: RequestA
     });
     const [paymentNetwork, setPaymentNetwork] = useState<'tron' | 'bnb'>('tron');
     const [copied, setCopied] = useState(false);
-    const [usdtRate, setUsdtRate] = useState<number>(16000);
 
     const PRICING_MAP: Record<string, number> = {
         '1': 599000,
@@ -58,14 +57,8 @@ const RequestAccessModal = ({ isOpen, onClose, initialDuration = '1' }: RequestA
     useEffect(() => {
         if (isOpen) {
             setFormData(prev => ({ ...prev, duration: initialDuration }));
-
-            const fetchRate = async () => {
-                const rate = await getUsdtIdrRate();
-                setUsdtRate(rate);
-            };
-            fetchRate();
         }
-    }, [isOpen]);
+    }, [isOpen, initialDuration]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;

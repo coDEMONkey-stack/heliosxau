@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollSmoother } from 'gsap/ScrollSmoother';
@@ -18,6 +18,7 @@ import Preloader from './components/Preloader';
 import Header from './components/Header';
 import TopLogo from './components/TopLogo';
 import RequestAccessModal from './components/RequestAccessModal';
+import { getUsdtIdrRate } from './utils/cryptoApi';
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText, useGSAP);
@@ -26,6 +27,18 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState('1');
+  const [usdtRate, setUsdtRate] = useState<number>(16700);
+
+  useEffect(() => {
+    const fetchRate = async () => {
+      const rate = await getUsdtIdrRate();
+      setUsdtRate(rate);
+    };
+    fetchRate();
+    // Optional: Refresh rate every 5 minutes
+    const interval = setInterval(fetchRate, 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleOpenModal = (planId: string = '1') => {
     setSelectedPlan(planId);
@@ -67,7 +80,7 @@ function App() {
             <CorePrinciples />
             <SystemOverview />
             <WhoThisIsFor />
-            <Pricing onOpenModal={handleOpenModal} />
+            <Pricing onOpenModal={handleOpenModal} usdtRate={usdtRate} />
             <BrandStory />
             <Footer />
           </div>
@@ -79,6 +92,7 @@ function App() {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         initialDuration={selectedPlan}
+        usdtRate={usdtRate}
       />
     </>
   );
