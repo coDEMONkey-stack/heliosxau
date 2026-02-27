@@ -8,8 +8,13 @@ import {
     faSun,
     faShieldHalved,
     faImage,
-    faCloudArrowUp
+    faCloudArrowUp,
+    faCopy,
+    faCheck
 } from '@fortawesome/free-solid-svg-icons';
+
+import usdtTron from '../assets/get-subscription/usdt-tron.jpg';
+import usdtBnb from '../assets/get-subscription/usdt-bnb.jpg';
 
 interface RequestAccessModalProps {
     isOpen: boolean;
@@ -29,8 +34,10 @@ const RequestAccessModal = ({ isOpen, onClose }: RequestAccessModalProps) => {
         fullName: '',
         email: '',
         instagram: '',
-        duration: '0', // 1 Day - Celestial Trial
+        duration: '1', // Default to 2 Weeks
     });
+    const [paymentNetwork, setPaymentNetwork] = useState<'tron' | 'bnb'>('tron');
+    const [copied, setCopied] = useState(false);
 
     // Update duration when modal opens
     useEffect(() => {
@@ -88,6 +95,16 @@ const RequestAccessModal = ({ isOpen, onClose }: RequestAccessModalProps) => {
         });
     };
 
+    const handleCopyAddress = () => {
+        const address = paymentNetwork === 'tron'
+            ? 'TB4iwfQqkgEtPVV5KNihqjPiQDZozDJHAB'
+            : '0xc83FBcA52024B2875C1b51d047334B5950aE8934';
+
+        navigator.clipboard.writeText(address);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!formData.fullName || !formData.email || !formData.instagram) {
@@ -141,8 +158,9 @@ const RequestAccessModal = ({ isOpen, onClose }: RequestAccessModalProps) => {
             await emailjs.send(serviceId, templateIdUser, userParams, publicKey);
 
             setStatus('success');
-            setFormData({ fullName: '', email: '', instagram: '', duration: '0' });
+            setFormData({ fullName: '', email: '', instagram: '', duration: '1' });
             setFileName(null);
+            setPaymentNetwork('tron');
 
             setTimeout(() => {
                 onClose();
@@ -276,6 +294,59 @@ const RequestAccessModal = ({ isOpen, onClose }: RequestAccessModalProps) => {
                                     <option value="2">1 Month - Strategic Growth</option>
                                     <option value="3">2 Months - Celestial Command</option>
                                 </select>
+                            </div>
+
+                            {/* Payment Method Section */}
+                            <div className="space-y-4 pt-2">
+                                <label className="block text-xs font-mono text-gold-muted uppercase tracking-[0.2em]">Payment Network (USDT)</label>
+
+                                <div className="grid grid-cols-2 gap-2">
+                                    <button
+                                        type="button"
+                                        onClick={() => setPaymentNetwork('tron')}
+                                        className={`py-2 px-3 text-[10px] font-mono border rounded-sm transition-all uppercase tracking-widest ${paymentNetwork === 'tron' ? 'bg-gold-muted/20 border-gold-bright text-gold-bright' : 'bg-obsidian/50 border-gold-muted/20 text-gold-muted hover:border-gold-muted/40'}`}
+                                    >
+                                        TRC-20 (Tron)
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => setPaymentNetwork('bnb')}
+                                        className={`py-2 px-3 text-[10px] font-mono border rounded-sm transition-all uppercase tracking-widest ${paymentNetwork === 'bnb' ? 'bg-gold-muted/20 border-gold-bright text-gold-bright' : 'bg-obsidian/50 border-gold-muted/20 text-gold-muted hover:border-gold-muted/40'}`}
+                                    >
+                                        BEP-20 (BNB)
+                                    </button>
+                                </div>
+
+                                <div className="bg-obsidian/60 border border-gold-muted/10 p-4 rounded-sm flex flex-col items-center gap-4">
+                                    <div className="relative group w-32 h-32 md:w-40 md:h-40">
+                                        <div className="absolute inset-0 bg-gold-bright/10 blur-xl opacity-0 group-hover:opacity-40 transition-opacity" />
+                                        <img
+                                            src={paymentNetwork === 'tron' ? usdtTron : usdtBnb}
+                                            alt="USDT QR Code"
+                                            className="w-full h-full object-contain relative z-10 border border-gold-muted/20 p-1 bg-white"
+                                        />
+                                    </div>
+
+                                    <div className="w-full">
+                                        <p className="text-[10px] font-mono text-gold-muted/60 mb-2 uppercase text-center">Wallet Address</p>
+                                        <div className="flex items-center gap-2 bg-charcoal border border-gold-muted/30 p-2 rounded-sm group">
+                                            <code className="flex-1 text-[10px] md:text-sm font-mono text-off-white truncate overflow-hidden">
+                                                {paymentNetwork === 'tron' ? 'TB4iwfQqkgEtPVV5KNihqjPiQDZozDJHAB' : '0xc83FBcA52024B2875C1b51d047334B5950aE8934'}
+                                            </code>
+                                            <button
+                                                type="button"
+                                                onClick={handleCopyAddress}
+                                                className="p-1.5 text-gold-muted hover:text-gold-bright transition-colors"
+                                                title="Copy to clipboard"
+                                            >
+                                                <FontAwesomeIcon icon={copied ? faCheck : faCopy} className={copied ? 'text-green-500' : ''} />
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <p className="text-[9px] font-mono text-gold-muted/40 italic text-center">
+                                        * Please transfer exactly the amount for your chosen duration.
+                                    </p>
+                                </div>
                             </div>
 
                             <div>
