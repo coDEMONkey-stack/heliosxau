@@ -108,7 +108,7 @@ const InvestmentCalculator = () => {
                                             setInputValue(val);
                                         }
                                     }}
-                                    className="w-full bg-obsidian/60 border border-gold-muted/30 text-white px-5 py-4 text-2xl font-serif focus:outline-none focus:border-gold-bright transition-colors rounded-sm"
+                                    className="w-full bg-obsidian/60 border border-gold-muted/30 text-white pl-5 pr-28 sm:pr-40 py-4 text-lg sm:text-2xl font-serif focus:outline-none focus:border-gold-bright transition-colors rounded-sm placeholder:text-sm sm:placeholder:text-base md:placeholder:text-xl"
                                     placeholder="Enter amount"
                                 />
                                 <div className="absolute right-4 top-1/2 -translate-y-1/2 flex gap-2">
@@ -187,37 +187,37 @@ const InvestmentCalculator = () => {
                             {/* Projections */}
                             <div className="flex items-end justify-between group">
                                 <div className="space-y-1">
-                                    <span className="block text-gray-500 text-[10px] uppercase tracking-[0.2em] font-mono">Daily Dividends (Avg)</span>
-                                    <span className="block text-white text-xl md:text-2xl font-serif tracking-widest group-hover:text-gold-bright transition-colors">
+                                    <span className="block text-gray-500 text-[8px] sm:text-[10px] uppercase tracking-[0.2em] font-mono">Daily Dividends (Avg)</span>
+                                    <span className="block text-white text-lg sm:text-xl md:text-2xl font-serif tracking-widest group-hover:text-gold-bright transition-colors">
                                         {investment < minEquity ? "—" : formatCurrency(dailyProfit)}
                                     </span>
                                 </div>
                                 <div className="text-right">
-                                    <span className="text-[10px] text-gold-muted/40 font-mono uppercase tracking-widest">Growth: ~1.5% - 5.0%</span>
+                                    <span className="text-[8px] sm:text-[10px] text-gold-muted/40 font-mono uppercase tracking-widest whitespace-nowrap">Growth: ~1.5% - 5.0%</span>
                                 </div>
                             </div>
 
                             <div className="flex items-end justify-between group">
                                 <div className="space-y-1">
-                                    <span className="block text-gray-500 text-[10px] uppercase tracking-[0.2em] font-mono">Weekly Accumulation</span>
-                                    <span className="block text-white text-xl md:text-2xl font-serif tracking-widest group-hover:text-gold-bright transition-colors">
+                                    <span className="block text-gray-500 text-[8px] sm:text-[10px] uppercase tracking-[0.2em] font-mono">Weekly Accumulation</span>
+                                    <span className="block text-white text-lg sm:text-xl md:text-2xl font-serif tracking-widest group-hover:text-gold-bright transition-colors">
                                         {investment < minEquity ? "—" : formatCurrency(weeklyProfit)}
                                     </span>
                                 </div>
                                 <div className="text-right">
-                                    <span className="text-[10px] text-gold-muted/40 font-mono uppercase tracking-widest">5 Trading Days</span>
+                                    <span className="text-[8px] sm:text-[10px] text-gold-muted/40 font-mono uppercase tracking-widest whitespace-nowrap">5 Trading Days</span>
                                 </div>
                             </div>
 
                             <div className="flex items-end justify-between group">
                                 <div className="space-y-1">
-                                    <span className="block text-gold-muted/80 text-[10px] uppercase tracking-[0.3em] font-bold">Monthly Institutional Goal</span>
-                                    <span className="block text-gold-bright text-3xl md:text-4xl font-serif tracking-[0.1em] drop-shadow-[0_0_15px_rgba(242,208,107,0.2)]">
+                                    <span className="block text-gold-muted/80 text-[8px] sm:text-[10px] uppercase tracking-[0.3em] font-bold">Monthly Institutional Goal</span>
+                                    <span className="block text-gold-bright text-2xl sm:text-3xl md:text-4xl font-serif tracking-[0.1em] drop-shadow-[0_0_15px_rgba(242,208,107,0.2)]">
                                         {investment < minEquity ? "—" : formatCurrency(monthlyProfit)}
                                     </span>
                                 </div>
                                 <div className="text-right">
-                                    <span className="text-[10px] text-alert-green/60 font-mono uppercase tracking-widest">Compounding potential</span>
+                                    <span className="text-[8px] sm:text-[10px] text-alert-green/60 font-mono uppercase tracking-widest whitespace-nowrap">Compounding potential</span>
                                 </div>
                             </div>
                         </div>
