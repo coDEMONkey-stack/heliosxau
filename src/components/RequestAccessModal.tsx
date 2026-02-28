@@ -260,7 +260,7 @@ const RequestAccessModal = ({ isOpen, onClose, initialDuration = '1', usdtRate }
                                     value={formData.fullName}
                                     onChange={handleInputChange}
                                     required
-                                    placeholder="Ilham"
+                                    placeholder="Enter your full name"
                                     className="w-full bg-obsidian border border-gold-muted/20 p-3 rounded-sm text-off-white focus:border-gold-bright outline-none transition-all placeholder:text-gray-600 font-sans"
                                 />
                             </div>
@@ -288,7 +288,7 @@ const RequestAccessModal = ({ isOpen, onClose, initialDuration = '1', usdtRate }
                                         value={formData.instagram}
                                         onChange={handleInputChange}
                                         required
-                                        placeholder="i.zhuo88"
+                                        placeholder="your.username"
                                         className="w-full bg-obsidian border border-gold-muted/20 py-3 pl-8 pr-3 rounded-sm text-off-white focus:border-gold-bright outline-none transition-all placeholder:text-gray-600 font-sans"
                                     />
                                 </div>
