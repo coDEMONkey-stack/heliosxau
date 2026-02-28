@@ -52,7 +52,7 @@ const InvestmentCalculator = () => {
     };
 
     return (
-        <div ref={containerRef} className="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
+        <div ref={containerRef} className="max-w-5xl mx-auto px-4 sm:px-6 relative z-10 overflow-x-hidden">
             {/* Styles to hide spin buttons */}
             <style dangerouslySetInnerHTML={{
                 __html: `
@@ -72,15 +72,15 @@ const InvestmentCalculator = () => {
                     <h3 className="text-3xl md:text-4xl font-serif text-white tracking-widest uppercase relative z-10">
                         Investment <span className="text-gold-muted">Calculator</span>
                     </h3>
-                    <div className="absolute -top-4 -left-4 -right-4 -bottom-2 border-x border-gold-muted/20 opacity-30"></div>
+                    <div className="absolute -top-4 -left-2 -right-2 -bottom-2 border-x border-gold-muted/20 opacity-30 md:-left-4 md:-right-4"></div>
                 </div>
                 <div className="w-32 h-[1px] bg-gradient-to-r from-transparent via-gold-muted to-transparent mx-auto mt-6"></div>
             </div>
 
             <div className="grid lg:grid-cols-12 gap-8 items-start">
                 {/* Input Section */}
-                <div className="lg:col-span-5 space-y-6 calc-card">
-                    <div className="bg-charcoal/40 backdrop-blur-md border border-gold-muted/20 p-8 rounded-sm relative overflow-hidden group">
+                <div className="lg:col-span-5 space-y-6 calc-card min-w-0">
+                    <div className="bg-charcoal/40 backdrop-blur-md border border-gold-muted/20 p-5 sm:p-8 rounded-sm relative overflow-hidden group">
                         {/* Greek Corner Ornaments */}
                         <div className="absolute top-0 left-0 w-4 h-4 border-t border-l border-gold-muted/40"></div>
                         <div className="absolute top-0 right-0 w-4 h-4 border-t border-r border-gold-muted/40"></div>
@@ -108,10 +108,10 @@ const InvestmentCalculator = () => {
                                             setInputValue(val);
                                         }
                                     }}
-                                    className="w-full bg-obsidian/60 border border-gold-muted/30 text-white pl-5 pr-28 sm:pr-40 py-4 text-lg sm:text-2xl font-serif focus:outline-none focus:border-gold-bright transition-colors rounded-sm placeholder:text-sm sm:placeholder:text-base md:placeholder:text-xl"
+                                    className="w-full bg-obsidian/60 border border-gold-muted/30 text-white pl-4 pr-[100px] sm:pr-40 py-4 text-base sm:text-2xl font-serif focus:outline-none focus:border-gold-bright transition-colors rounded-sm placeholder:text-[10px] sm:placeholder:text-base md:placeholder:text-xl"
                                     placeholder="Enter amount"
                                 />
-                                <div className="absolute right-4 top-1/2 -translate-y-1/2 flex gap-2">
+                                <div className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 flex gap-1 sm:gap-2">
                                     <button
                                         onClick={() => setIsCent(false)}
                                         className={`px-3 py-1 text-[10px] uppercase tracking-tighter border transition-all ${!isCent ? 'bg-gold-muted text-obsidian border-gold-muted' : 'text-gold-muted border-gold-muted/30 hover:border-gold-muted'}`}
@@ -172,8 +172,8 @@ const InvestmentCalculator = () => {
                 </div>
 
                 {/* Output Section */}
-                <div className="lg:col-span-7 calc-card">
-                    <div className="bg-gradient-to-br from-charcoal/60 to-obsidian border border-gold-muted/30 p-8 rounded-sm relative">
+                <div className="lg:col-span-7 calc-card min-w-0">
+                    <div className="bg-gradient-to-br from-charcoal/60 to-obsidian border border-gold-muted/30 p-5 sm:p-8 rounded-sm relative">
                         {/* Column Decorative Element */}
                         <div className="absolute top-0 bottom-0 left-0 w-[2px] bg-gradient-to-b from-transparent via-gold-muted/40 to-transparent"></div>
                         <div className="absolute top-0 bottom-0 right-0 w-[2px] bg-gradient-to-b from-transparent via-gold-muted/40 to-transparent"></div>
@@ -185,7 +185,7 @@ const InvestmentCalculator = () => {
 
                         <div className="space-y-8">
                             {/* Projections */}
-                            <div className="flex items-end justify-between group">
+                            <div className="flex flex-col sm:flex-row sm:items-end justify-between items-start gap-2 group">
                                 <div className="space-y-1">
                                     <span className="block text-gray-500 text-[8px] sm:text-[10px] uppercase tracking-[0.2em] font-mono">Daily Dividends (Avg)</span>
                                     <span className="block text-white text-lg sm:text-xl md:text-2xl font-serif tracking-widest group-hover:text-gold-bright transition-colors">
@@ -197,7 +197,7 @@ const InvestmentCalculator = () => {
                                 </div>
                             </div>
 
-                            <div className="flex items-end justify-between group">
+                            <div className="flex flex-col sm:flex-row sm:items-end justify-between items-start gap-2 group">
                                 <div className="space-y-1">
                                     <span className="block text-gray-500 text-[8px] sm:text-[10px] uppercase tracking-[0.2em] font-mono">Weekly Accumulation</span>
                                     <span className="block text-white text-lg sm:text-xl md:text-2xl font-serif tracking-widest group-hover:text-gold-bright transition-colors">
@@ -209,7 +209,7 @@ const InvestmentCalculator = () => {
                                 </div>
                             </div>
 
-                            <div className="flex items-end justify-between group">
+                            <div className="flex flex-col sm:flex-row sm:items-end justify-between items-start gap-2 group">
                                 <div className="space-y-1">
                                     <span className="block text-gold-muted/80 text-[8px] sm:text-[10px] uppercase tracking-[0.3em] font-bold">Monthly Institutional Goal</span>
                                     <span className="block text-gold-bright text-2xl sm:text-3xl md:text-4xl font-serif tracking-[0.1em] drop-shadow-[0_0_15px_rgba(242,208,107,0.2)]">
