@@ -98,6 +98,9 @@ const InvestmentCalculator = () => {
                                     value={inputValue}
                                     onChange={(e) => {
                                         const val = e.target.value;
+                                        // Limit to 9 digits to prevent layout breakage
+                                        if (val.length > 9) return;
+
                                         // Prevent leading zeros if there's more than one digit
                                         if (val.length > 1 && val.startsWith('0')) {
                                             setInputValue(val.replace(/^0+/, ''));
