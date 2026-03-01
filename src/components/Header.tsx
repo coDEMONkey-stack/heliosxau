@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
 import { DotLottiePlayer } from '@dotlottie/react-player';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTriangleExclamation, faMicrochip, faQuoteLeft, faLockOpen } from '@fortawesome/free-solid-svg-icons';
@@ -17,20 +18,26 @@ const Header = ({ onOpenModal }: { onOpenModal: () => void }) => {
     const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
     const navRef = useRef<HTMLDivElement>(null);
     const itemRefs = useRef<(HTMLAnchorElement | HTMLButtonElement | null)[]>([]);
+    const isScrollingTo = useRef<boolean>(false);
 
     useEffect(() => {
         const handleScroll = () => {
+            if (isScrollingTo.current) return; // Prevent updates during programmatic scroll
+
             const scrollPos = window.scrollY;
             const threshold = window.innerHeight * 0.4;
             setHeaderVisible(scrollPos > threshold);
 
             const sections = navigation.map(item => item.href.substring(1));
-            // Add 'who' section for Access if needed, but here we just track scroll for main 3
+            const scrollCenter = window.scrollY + (window.innerHeight / 2.5);
+
             for (let i = 0; i < sections.length; i++) {
                 const element = document.getElementById(sections[i]);
                 if (element) {
-                    const rect = element.getBoundingClientRect();
-                    if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+                    const top = element.offsetTop;
+                    const bottom = top + element.offsetHeight;
+
+                    if (scrollCenter >= top && scrollCenter <= bottom) {
                         setActiveIndex(i);
                         break;
                     }
@@ -38,7 +45,7 @@ const Header = ({ onOpenModal }: { onOpenModal: () => void }) => {
             }
         };
 
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll, { passive: true });
         handleScroll();
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
@@ -57,16 +64,25 @@ const Header = ({ onOpenModal }: { onOpenModal: () => void }) => {
         e.preventDefault();
         const element = document.getElementById(href.substring(1));
         if (element) {
+            isScrollingTo.current = true;
+            setActiveIndex(index);
+
             const smoother = ScrollSmoother.get();
             if (smoother) {
                 smoother.scrollTo(element, true, "top 120");
+                // Reset scrolling flag after animation (approximate or use GSAP callback if available)
+                gsap.delayedCall(1, () => {
+                    isScrollingTo.current = false;
+                });
             } else {
                 window.scrollTo({
                     top: element.offsetTop - 120,
                     behavior: 'smooth'
                 });
+                setTimeout(() => {
+                    isScrollingTo.current = false;
+                }, 1000);
             }
-            setActiveIndex(index);
         }
     };
 
@@ -123,18 +139,18 @@ const Header = ({ onOpenModal }: { onOpenModal: () => void }) => {
                 <button
                     onClick={() => {
                         onOpenModal();
-                        setActiveIndex(5);
+                        setActiveIndex(3);
                     }}
-                    ref={el => { itemRefs.current[5] = el; }}
-                    className={`relative z-20 flex flex-col items-center justify-center w-[75px] md:w-[95px] py-1 transition-all duration-700 group ${activeIndex === 5
+                    ref={el => { itemRefs.current[3] = el; }}
+                    className={`relative z-20 flex flex-col items-center justify-center w-[75px] md:w-[95px] py-1 transition-all duration-700 group ${activeIndex === 3
                         ? 'text-gold-bright'
                         : 'text-gray-400 hover:text-off-white'
                         }`}
                 >
-                    <div className={`text-xl md:text-2xl mb-1 transition-all duration-700 ${activeIndex === 5 ? 'scale-115 -translate-y-1' : 'group-hover:scale-110'}`}>
-                        <FontAwesomeIcon icon={faLockOpen} className={activeIndex === 5 ? 'drop-shadow-[0_0_8px_rgba(255,215,0,0.5)]' : ''} />
+                    <div className={`text-xl md:text-2xl mb-1 transition-all duration-700 ${activeIndex === 3 ? 'scale-115 -translate-y-1' : 'group-hover:scale-110'}`}>
+                        <FontAwesomeIcon icon={faLockOpen} className={activeIndex === 3 ? 'drop-shadow-[0_0_8px_rgba(255,215,0,0.5)]' : ''} />
                     </div>
-                    <span className={`text-[9px] md:text-[10px] font-sans font-bold tracking-[0.15em] uppercase transition-all duration-700 ${activeIndex === 5 ? 'opacity-100 scale-105' : 'opacity-40 group-hover:opacity-100'}`}>
+                    <span className={`text-[9px] md:text-[10px] font-sans font-bold tracking-[0.15em] uppercase transition-all duration-700 ${activeIndex === 3 ? 'opacity-100 scale-105' : 'opacity-40 group-hover:opacity-100'}`}>
                         Access
                     </span>
                 </button>
