@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollSmoother } from 'gsap/ScrollSmoother';
@@ -24,6 +24,7 @@ import { getUsdtIdrRate } from './utils/cryptoApi';
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText, useGSAP);
 
 function App() {
+  const smoother = useRef<ScrollSmoother | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState('1');
@@ -50,16 +51,24 @@ function App() {
       const isMobile = window.innerWidth < 768;
 
       // Initialize ScrollSmoother
-      ScrollSmoother.create({
+      smoother.current = ScrollSmoother.create({
         wrapper: '#smooth-wrapper',
         content: '#smooth-content',
-        smooth: isMobile ? 0.8 : 1.5, // Reduced smooth on mobile for responsiveness
+        smooth: isMobile ? 1.0 : 1.5, // Enabled on mobile with a slightly faster catch-up
         effects: true,
-        smoothTouch: 0.1,
-        normalizeScroll: isMobile, // Prevents address bar jitters and scroll lag on mobile
+        smoothTouch: 0.1, // Subtle smoothing on touch devices for a premium feel without lag
+        ignoreMobileResize: true, // Prevents jumps when address bar hides/shows
+        normalizeScroll: false, // Keep disabled to ensure standard touch scrolling performance
       });
     }
   }, [isLoading]);
+
+  // Pause/Resume ScrollSmoother when modal opens/closes
+  useEffect(() => {
+    if (smoother.current) {
+      smoother.current.paused(isModalOpen);
+    }
+  }, [isModalOpen]);
 
   return (
     <>

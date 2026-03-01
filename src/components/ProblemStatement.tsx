@@ -67,7 +67,7 @@ const ProblemStatement = () => {
                     The Retail Trader's Dilemma
                 </h2>
 
-                <div className="space-y-5 text-xl md:text-[26px] sm:text-xl font-light text-gray-300 leading-relaxed">
+                <div className="space-y-5 text-xl md:text-[27px] sm:text-xl font-light text-gray-300 leading-relaxed">
                     <p>
                         <span className="text-gold-muted font-normal">Emotional Overtrading</span> erodes capital faster than any strategy can build it.
                     </p>
@@ -75,12 +75,12 @@ const ProblemStatement = () => {
                         Implementation lag during high volatility leads to <span className="text-alert-red font-mono">slippage</span> and missed entries.
                     </p>
                     <p>
-                        Gold markets move with institutional precision—retail inefficiency is simply the <span className="italic">liquidity</span> they feed on.
+                        Gold markets move with institutional precision—retail inefficiency is simply the <span className="italic">liquidity</span>they feed on.
                     </p>
                 </div>
 
                 {/* Comparison Table */}
-                <div className="mt-16 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-gold-muted/20">
+                <div className="mt-16 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-gold-muted/20 touch-pan-x">
                     <table className="w-full text-left border-collapse min-w-[650px] md:min-w-full">
                         <thead>
                             <tr className="border-b border-gold-muted/30">
