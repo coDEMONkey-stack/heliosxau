@@ -1,12 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { DotLottiePlayer } from '@dotlottie/react-player';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-    faTriangleExclamation,
-    faMicrochip,
-    faQuoteLeft,
-    faLockOpen
-} from '@fortawesome/free-solid-svg-icons';
+import { faTriangleExclamation, faMicrochip, faQuoteLeft, faLockOpen } from '@fortawesome/free-solid-svg-icons';
+import { ScrollSmoother } from 'gsap/ScrollSmoother';
 import iosLottie from '../assets/ios-tab-menu.lottie';
 
 const navigation = [
@@ -61,10 +57,15 @@ const Header = ({ onOpenModal }: { onOpenModal: () => void }) => {
         e.preventDefault();
         const element = document.getElementById(href.substring(1));
         if (element) {
-            window.scrollTo({
-                top: element.offsetTop - 120,
-                behavior: 'smooth'
-            });
+            const smoother = ScrollSmoother.get();
+            if (smoother) {
+                smoother.scrollTo(element, true, "top 120");
+            } else {
+                window.scrollTo({
+                    top: element.offsetTop - 120,
+                    behavior: 'smooth'
+                });
+            }
             setActiveIndex(index);
         }
     };

@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+import { ScrollSmoother } from 'gsap/ScrollSmoother';
 import CandlestickChart from './CandlestickChart';
 import ThreeBackground from './ThreeBackground';
 
@@ -107,7 +108,7 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
                         </button>
                         <button
                             onClick={() => {
-                                const smoother = gsap.getProperty(window, "ScrollSmoother") as any;
+                                const smoother = ScrollSmoother.get();
                                 if (smoother) {
                                     smoother.scrollTo("#system", true);
                                 } else {
