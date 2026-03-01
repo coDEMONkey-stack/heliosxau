@@ -92,6 +92,7 @@ const Header = ({ onOpenModal }: { onOpenModal: () => void }) => {
                             autoplay
                             loop
                             style={{ width: '100%', height: '100%' }}
+                            key="ios-tab-menu"
                         />
                     </div>
                 </div>

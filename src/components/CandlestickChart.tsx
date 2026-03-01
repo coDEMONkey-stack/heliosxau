@@ -18,11 +18,23 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({ width = 800, height
         if (!ctx) return;
 
         let animationFrameId: number;
+        let isVisible = true;
+
+        // Optimization: Halt animation when not in viewport
+        const observer = new IntersectionObserver((entries) => {
+            isVisible = entries[0].isIntersecting;
+        }, { threshold: 0.1 });
+
+        observer.observe(canvas);
 
         const render = () => {
-            const now = Date.now();
+            if (!isVisible) {
+                animationFrameId = requestAnimationFrame(render);
+                return;
+            }
 
-            // Clear canvas
+            const now = Date.now();
+            // ... (rest of render logic stays same)
             ctx.clearRect(0, 0, width, height);
 
             // Margins for signals
@@ -149,7 +161,10 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({ width = 800, height
 
         render();
 
-        return () => cancelAnimationFrame(animationFrameId);
+        return () => {
+            cancelAnimationFrame(animationFrameId);
+            observer.disconnect();
+        };
     }, [data, width, height]);
 
     return <canvas ref={canvasRef} width={width} height={height} className="w-full h-full" />;

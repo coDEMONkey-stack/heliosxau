@@ -47,13 +47,16 @@ function App() {
 
   useGSAP(() => {
     if (!isLoading) {
+      const isMobile = window.innerWidth < 768;
+
       // Initialize ScrollSmoother
       ScrollSmoother.create({
         wrapper: '#smooth-wrapper',
         content: '#smooth-content',
-        smooth: 1.5, // Elite, weighted feel
+        smooth: isMobile ? 0.8 : 1.5, // Reduced smooth on mobile for responsiveness
         effects: true,
         smoothTouch: 0.1,
+        normalizeScroll: isMobile, // Prevents address bar jitters and scroll lag on mobile
       });
     }
   }, [isLoading]);
